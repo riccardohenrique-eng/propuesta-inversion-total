@@ -321,7 +321,7 @@ h1, h2, h3, h4, summary, .k, th { text-wrap: balance; }
     <div class="family f-lav">
       <header><h3>Web</h3><span class="small">Páginas que convierten</span></header>
       <div class="svc" id="card-landing"><div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M8 14h8M8 17h5"/></svg></div>
-<div><h4>Página de venta por proyecto</h4><p>Información completa del proyecto, conectada a los anuncios y al seguimiento de clientes.</p><div class="price">$40.000 por página</div></div>
+<div><h4>Página de venta por proyecto</h4><p>Información completa del proyecto, conectada a los anuncios y al seguimiento de clientes.</p><div class="price">$120.000 por página</div></div>
 <div class="ctl"><div class="stp" role="group" aria-label="Cantidad de páginas"><button type="button" id="landing-minus" aria-label="Quitar uno">−</button><output id="landing-qty" aria-live="polite">0</output><button type="button" id="landing-plus" aria-label="Agregar uno">+</button></div></div></div>
       <div class="svc" id="card-region"><div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></div>
 <div><h4>Página web de La Araucanía</h4><p>Los proyectos de la región en una página propia. Entrega en hasta 15 días hábiles.</p><div class="price">$300.000 pago único</div></div>
@@ -482,7 +482,7 @@ h1, h2, h3, h4, summary, .k, th { text-wrap: balance; }
     if (qty.video) { m += qty.video * 50000; L.push(["Video · " + qty.video + (qty.video === 1 ? " hora" : " horas"), qty.video * 50000, "/mes"]); }
     if (s) { m += s; L.push(["Redes sociales", s, "/mes"]); }
     if ($("gsetup").checked) { o += 120000; L.push(["Implementación Google Ads", 120000, " único"]); }
-    if (qty.landing) { o += qty.landing * 40000; L.push(["Páginas de venta · " + qty.landing, qty.landing * 40000, " único"]); }
+    if (qty.landing) { o += qty.landing * 120000; L.push(["Páginas de venta · " + qty.landing, qty.landing * 120000, " único"]); }
     if ($("region").checked) { o += 300000; L.push(["Página La Araucanía", 300000, " único"]); }
     if ($("site").checked) { o += 500000; L.push(["Rediseño del sitio", 500000, " único"]); }
     var ads = Number($("ad-meta").value) + Number($("ad-google").value);
