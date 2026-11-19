@@ -134,6 +134,8 @@ section.band .summary { background: var(--fog); }
 .ads h4 { margin: 0 0 4px; font-size: 16px; }
 .ads label { display: grid; gap: 4px; font-size: 14px; margin: 10px 0; }
 .ads select { font: inherit; padding: 10px; border-radius: var(--r-btn); border: 1px solid var(--mist); background: var(--paper); color: var(--ink); }
+.wa { width: 100%; justify-content: center; text-align: center; margin-top: 20px; }
+.wa-note { text-align: center; margin: 8px 0 0; }
 .reset { width: 100%; margin-top: 16px; background: transparent; border: 2px solid var(--ink); color: var(--ink); border-radius: var(--r-btn); padding: 12px; font: inherit; font-weight: 500; cursor: pointer; }
 
 /* Anexo */
@@ -203,6 +205,7 @@ h1, h2, h3, h4, summary, .k, th { text-wrap: balance; }
     <p class="lead">Un plan para atraer, filtrar y atender mejor a quienes buscan invertir o vivir en Temuco, Villarrica, Chillán y Puerto Montt.</p>
     <ul class="chips" aria-label="Ciudades"><li class="chip">Temuco</li><li class="chip">Villarrica</li><li class="chip">Chillán</li><li class="chip">Puerto Montt</li></ul>
     <a class="btn" href="#arma-tu-plan">Arma tu plan →</a>
+    <p class="small" style="margin-top:16px">Propuesta válida hasta el 30-12-2026</p>
   </div>
 </section>
 
@@ -350,6 +353,8 @@ h1, h2, h3, h4, summary, .k, th { text-wrap: balance; }
         <div class="row strong"><span>Mensual con publicidad</span><span id="t-all">$0</span></div>
       </div>
     </div>
+    <a class="btn wa" id="wa" href="https://wa.me/56953868164" target="_blank" rel="noopener">Enviar mi selección por WhatsApp</a>
+    <p class="small wa-note">Se abre WhatsApp con tu selección y el total, listo para enviar.</p>
     <button type="button" class="reset" id="reset">Limpiar selección</button>
   </aside>
 </div>
@@ -415,6 +420,7 @@ h1, h2, h3, h4, summary, .k, th { text-wrap: balance; }
         <div class="grid" style="margin-top:24px">
           <div class="card"><h3 style="font-size:18px">Plazo sugerido de 3 meses</h3><p class="muted" style="margin:0">Es el tiempo que necesitan los anuncios para aprender y entregar resultados consistentes.</p></div>
           <div class="card"><h3 style="font-size:18px">Sin permanencia</h3><p class="muted" style="margin:0">No hay contrato mínimo. Inversión Total puede cancelar cualquier servicio cuando lo decida.</p></div>
+          <div class="card"><h3 style="font-size:18px">Vigencia</h3><p class="muted" style="margin:0">Los valores de esta propuesta son válidos hasta el 30-12-2026.</p></div>
           <div class="card"><h3 style="font-size:18px">Contratación flexible</h3><p class="muted" style="margin:0">Cada servicio se puede contratar por separado.</p></div>
           <div class="card"><h3 style="font-size:18px">Publicidad directa</h3><p class="muted" style="margin:0">Se paga directamente a Meta y Google con la tarjeta de Inversión Total y no forma parte de los valores de servicio. Las grabaciones se realizan en Temuco.</p></div>
         </div>
@@ -496,6 +502,18 @@ h1, h2, h3, h4, summary, .k, th { text-wrap: balance; }
     ["meta", "google", "gsetup", "site", "region"].forEach(function (id) { $("card-" + id).classList.toggle("on", $(id).checked); });
     ["design", "video", "landing"].forEach(function (k) { $("card-" + k).classList.toggle("on", qty[k] > 0); });
     $("card-social").classList.toggle("on", s > 0);
+    var msg;
+    if (!L.length) {
+      msg = "Hola, revisé la propuesta de marketing para Inversión Total y me gustaría conversar.";
+    } else {
+      msg = "Hola, revisé la propuesta de marketing para Inversión Total. Me interesan estos servicios:\n";
+      L.forEach(function (x) { msg += "\n• " + x[0] + ": " + fmt(x[1]) + x[2]; });
+      msg += "\n\nTotal mensual de servicios: " + fmt(m);
+      if (o) msg += "\nPagos únicos: " + fmt(o);
+      if (ads) msg += "\nPublicidad mensual (Meta y Google): " + fmt(ads);
+      msg += "\n\n¿Coordinamos los próximos pasos?";
+    }
+    $("wa").href = "https://wa.me/56953868164?text=" + encodeURIComponent(msg);
   }
   $("reset").addEventListener("click", function () {
     ["meta", "google", "gsetup", "site", "region"].forEach(function (id) { $(id).checked = false; });
