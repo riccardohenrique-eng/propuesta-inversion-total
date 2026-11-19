@@ -109,6 +109,17 @@ section.band .step { background: var(--fog); }
 /* Calculadora */
 .calc { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
 @media (max-width: 960px) { .calc { grid-template-columns: 1fr; } }
+#resumen .card { padding-bottom: 30px; }
+.mbar { display: none; }
+@media (max-width: 960px) {
+  .mbar { display: flex; position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 50; align-items: center; justify-content: space-between; gap: 12px; background: var(--ink); color: var(--paper); border-radius: 20px; padding: 12px 12px 12px 20px; transform: translateY(140%); transition: transform .25s ease; }
+  .mbar.on { transform: none; }
+  .mb-t { display: flex; flex-direction: column; line-height: 1.15; }
+  .mb-k { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; opacity: .7; }
+  .mb-t b { font-size: 22px; font-weight: 700; }
+  .mb-t small { font-size: 12px; opacity: .75; }
+  .mb-btn { background: var(--paper); color: var(--ink); text-decoration: none; font-weight: 600; font-size: 15px; padding: 12px 18px; border-radius: 999px; white-space: nowrap; }
+}
 .family { border-radius: var(--r-feature); padding: 36px; margin-bottom: 16px; }
 .family header { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 20px; }
 .family header h3 { margin: 0; }
@@ -252,11 +263,11 @@ h1, h2, h3, h4, summary, .k, th { text-wrap: balance; }
     <p class="eyebrow">Resumen ejecutivo</p>
     <h2>La propuesta en cinco puntos</h2>
     <div class="grid g5" style="margin-top:32px">
-      <div class="card"><div class="k">Situación actual</div><p class="muted">Los anuncios generan contactos, pero pocos con interés real o capacidad de compra, y una parte se pierde por demora en la respuesta o falta de información.</p></div>
-      <div class="card"><div class="k">Oportunidad</div><p class="muted">Cada mes hay al menos 8.600 búsquedas en Google de personas que buscan propiedades en las cuatro ciudades. Hoy Inversión Total no aparece en ellas.</p></div>
-      <div class="card"><div class="k">Propuesta</div><p class="muted">Anuncios pensados para cada ciudad en Meta y Google, filtros que separan al interesado del curioso y una atención por WhatsApp que responde en minutos.</p></div>
-      <div class="card"><div class="k">Inversión a medida</div><p class="muted">Cada servicio se contrata por separado. Inversión Total elige qué servicios necesita y cuánto invertir en publicidad, que se paga directamente a Meta y Google.</p></div>
-      <div class="card"><div class="k">Resultado esperado</div><p class="muted">Con $350.000 de publicidad en cada plataforma, entre 2.430 y 3.830 visitas al mes a las páginas de los proyectos, midiendo cuántas terminan en cotización y reunión.</p></div>
+      <div class="card"><div class="k">Situación actual</div><p class="muted">Llegan contactos, pero pocos califican y otros se pierden por demora.</p></div>
+      <div class="card"><div class="k">Oportunidad</div><p class="muted">Más de 8.600 búsquedas al mes en las cuatro ciudades, donde hoy no aparecen.</p></div>
+      <div class="card"><div class="k">Propuesta</div><p class="muted">Anuncios por ciudad, filtros de interés real y respuesta por WhatsApp en minutos.</p></div>
+      <div class="card"><div class="k">Inversión a medida</div><p class="muted">Cada servicio por separado. La publicidad se paga directo a Meta y Google.</p></div>
+      <div class="card"><div class="k">Resultado esperado</div><p class="muted">Entre 2.430 y 3.830 visitas al mes con $350.000 de publicidad por plataforma.</p></div>
     </div>
   </div>
 </section>
@@ -328,7 +339,8 @@ h1, h2, h3, h4, summary, .k, th { text-wrap: balance; }
     <h2>Arma tu plan a medida</h2>
     <p class="lead">Cada servicio se contrata por separado, en la cantidad que necesites, y se puede ajustar o cancelar mes a mes. Elige y ve tu total al instante.</p>
     
-<div class="calc">
+<div class="calc" id="calc">
+<div class="mbar" id="mbar" aria-hidden="true"><div class="mb-t"><span class="mb-k">Total mensual</span><b id="m-monthly">$0</b><small id="m-first">Primer mes $0</small></div><a class="mb-btn" href="#tu-plan" tabindex="-1">Ver mi plan</a></div>
   <div>
     <div class="family f-sky">
       <header><h3>Publicidad</h3><span class="small">Meta y Google</span></header>
@@ -372,7 +384,7 @@ h1, h2, h3, h4, summary, .k, th { text-wrap: balance; }
 <div class="ctl"><label class="tg" for="site"><input type="checkbox" id="site" aria-label="Rediseño del sitio institucional"><span class="sw"></span></label></div></div>
     </div>
   </div>
-  <aside class="summary" aria-label="Resumen de tu plan">
+  <aside class="summary" id="tu-plan" aria-label="Resumen de tu plan">
     <h3>Tu plan</h3>
     <div class="total"><div class="k">Total mensual de servicios</div><div class="v" id="t-monthly">$0</div></div>
     <div class="rows">
@@ -531,6 +543,7 @@ h1, h2, h3, h4, summary, .k, th { text-wrap: balance; }
     if ($("site").checked) { o += 500000; L.push(["Rediseño del sitio", 500000, " único"]); }
     var ads = Number($("ad-meta").value) + Number($("ad-google").value);
     $("design-qty").textContent = qty.design; $("video-qty").textContent = qty.video; $("landing-qty").textContent = qty.landing;
+    $("m-monthly").textContent = fmt(m); $("m-first").textContent = "Primer mes " + fmt(m + o);
     $("t-monthly").textContent = fmt(m); $("t-once").textContent = fmt(o); $("t-first").textContent = fmt(m + o);
     $("t-three").textContent = fmt(m * 3 + o); $("t-ads").textContent = fmt(ads); $("t-all").textContent = fmt(m + ads);
     var ul = $("selected"); ul.innerHTML = "";
@@ -558,6 +571,12 @@ h1, h2, h3, h4, summary, .k, th { text-wrap: balance; }
     qty.design = qty.video = qty.landing = 0; $("social-0").checked = true; $("ad-meta").value = "0"; $("ad-google").value = "0"; render();
   });
   render();
+  if ("IntersectionObserver" in window) {
+    var inCalc = false, inPlan = false, bar = $("mbar");
+    var sync = function () { bar.classList.toggle("on", inCalc && !inPlan); };
+    new IntersectionObserver(function (es) { inCalc = es[0].isIntersecting; sync(); }, { rootMargin: "-30% 0px -10% 0px" }).observe($("calc"));
+    new IntersectionObserver(function (es) { inPlan = es[0].isIntersecting; sync(); }, { threshold: 0.15 }).observe($("tu-plan"));
+  }
 })();
 </script>
 
